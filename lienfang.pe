@@ -1,0 +1,74 @@
+#!/usr/local/bin/fontforge -script
+
+Open($1)
+ScaleToEm(860, 140)
+
+Save("#inconsolata.sfd")
+Close()
+
+Open($2)
+ScaleToEm(860, 140)
+
+MergeFonts("IPAGothic-regular.sfd")
+
+# Trimming '.notdef' characters
+Select(".notdef")
+DetachAndRemoveGlyphs()
+
+SelectWorthOutputting()
+SetWidth(-1, 1)
+Scale(91, 91, 0, 0)
+SetWidth(110, 2)
+SetWidth(1, 1)
+Move(23, 0)
+SetWidth(-23, 1)
+
+Save("#mplus.sfd")
+Close()
+
+New()
+ScaleToEm(860, 140)
+
+SetFontNames("LienFang", "LienFang", "LienFang", "Regular", "© 2006-2012 Raph Levien. © 2011-2012 Cyreal. © 2014 M+ FONTS PROJECT. © 2003-2011 Information-technology Promotion Agency, Japan (IPA). All rights reserved.", "1.0")
+SetOS2Value("Weight", 400)
+SetOS2Value("Width", 5)
+SetOS2Value("FSType", 0)
+SetOS2Value("WinAscent", 835)
+SetOS2Value("WinAscentIsOffset", 0)
+SetOS2Value("WinDescent", 215)
+SetOS2Value("WinDescentIsOffset", 0)
+SetOS2Value("TypoAscent", 860)
+SetOS2Value("TypoAscentIsOffset", 0)
+SetOS2Value("TypoDescent", -140)
+SetOS2Value("TypoDescentIsOffset", 0)
+SetOS2Value("HHeadAscent", 835)
+SetOS2Value("HHeadAscentIsOffset", 0)
+SetOS2Value("HHeadDescent", -215)
+SetOS2Value("HHeadDescentIsOffset", 0)
+SetOS2Value("TypoLineGap", 0)
+SetOS2Value("HHeadLineGap", 0)
+SetOS2Value("VHeadLineGap", 0)
+SetPanose([2, 11, 5, 9, 2, 2, 3, 2, 2, 7])
+
+MergeFonts("#inconsolata.sfd")
+MergeFonts("#mplus.sfd")
+
+# Trimming '.notdef' characters
+Select(".notdef")
+DetachAndRemoveGlyphs()
+
+# Modifying Ideographic Space
+Select(0u2610)
+Copy()
+Select(0u3000)
+Paste()
+Select(0u271a)
+Copy()
+Select(0u3000)
+PasteInto()
+OverlapIntersect()
+
+Generate("LienFang.ttf", "", 0x84)
+Close()
+
+Quit(0)
